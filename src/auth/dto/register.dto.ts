@@ -10,15 +10,22 @@ export class RegisterDto {
   @IsString()
   lastName!: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: '0599999999',
+  })
   @IsString()
   phone!: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: '1990-01-01',
+  })
   @IsDateString()
   dateOfBirth!: string;
 
-  @ApiProperty({ minLength: 6 })
+  @ApiProperty({
+    example: 'password123',
+    minLength: 6,
+  })
   @MinLength(6)
   password!: string;
 }

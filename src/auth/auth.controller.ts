@@ -15,6 +15,9 @@ import {
   ApiOperation,
   ApiResponse,
 } from '@nestjs/swagger';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -34,4 +37,35 @@ login(
 ) {
   return this.authService.login(loginDto);
 }
+
+@Post('forgot-password')
+forgotPassword(
+  @Body()
+  dto: ForgotPasswordDto,
+) {
+  return this.authService.forgotPassword(
+    dto,
+  );
+}
+
+@Post('verify-otp')
+verifyOtp(
+  @Body()
+  dto: VerifyOtpDto,
+) {
+  return this.authService.verifyOtp(
+    dto,
+  );
+}
+
+@Post('reset-password')
+resetPassword(
+  @Body()
+  dto: ResetPasswordDto,
+) {
+  return this.authService.resetPassword(
+    dto,
+  );
+}
+
 }
