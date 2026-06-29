@@ -21,7 +21,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Users API')
-    .setDescription('Auth + Users System')
+    .setDescription('Users System')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
