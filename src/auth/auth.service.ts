@@ -68,7 +68,7 @@ export class AuthService {
     return {
       message: 'User created successfully',
       userId: createdUser.id,
-
+      firstName: createdUser.firstName,
     };
 
   }
@@ -107,6 +107,9 @@ export class AuthService {
     const payload = {
       sub: user.id,
       phone: user.phone,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      dateOfBirth: user.dateOfBirth,
     };
 
     console.log(process.env.JWT_SECRET);
@@ -266,6 +269,11 @@ export class AuthService {
       );
     }
 
+    if (dto.newPassword === dto.currentPassword) {
+      throw new BadRequestException(
+        'New password must be different from current password',
+      );
+    }
     const isPasswordValid =
       await bcrypt.compare(
         dto.currentPassword,
@@ -294,7 +302,7 @@ export class AuthService {
     });
 
     return {
-      
+
       message:
         'Password changed successfully',
     };

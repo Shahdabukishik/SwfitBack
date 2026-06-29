@@ -9,12 +9,13 @@ import {
   Req,
 } from '@nestjs/common';
 
+import { ForbiddenException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import {ChangePasswordDto} from './dto/change-password.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 import {
   ApiTags,
@@ -88,13 +89,19 @@ export class AuthController {
 
   @ApiBearerAuth()
   @Version('1')
-  @Patch('change-password')
+  @Patch(':userId/change-password')
   @UseGuards(JwtAuthGuard)
   changePassword(
+    @Param('userId') userId: string,
     @Req() req,
     @Body() dto: ChangePasswordDto,
   ) {
     console.log(req.user);
+    if (req.user.userId !== userId) {
+      throw new ForbiddenException(
+        'You are not allowed to change another user password.',
+      );
+    }
     return this.authService.changePassword(
       req.user.userId,
       dto,
